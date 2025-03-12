@@ -1,16 +1,17 @@
 # PracticaRedesII
 
-Creación de la Estructura del Proyecto:
+# 1. Creación de la Estructura del Proyecto:
 
-Carpeta Principal: Creaste una carpeta llamada docker-nginx-phpmyadmin.
-Subcarpetas: Dentro de docker-nginx-phpmyadmin, creaste:
-nginx: Para la configuración de Nginx.
-app: Para los archivos PHP.
-2. Creación del Archivo docker-compose.yml:
+# Carpeta Principal: Creaste una carpeta llamada "docker-nginx-phpmyadmin."
+# Subcarpetas: Dentro de docker-nginx-phpmyadmin, creaste:
+# nginx: Para la configuración de Nginx.
+# app: Para los archivos PHP.
 
-En la carpeta docker-nginx-phpmyadmin, creaste un archivo docker-compose.yml con la siguiente configuración:
+# 2. Creación del Archivo docker-compose.yml:
 
-YAML
+# En la carpeta docker-nginx-phpmyadmin, creaste un archivo docker-compose.yml con la siguiente configuración:
+
+# YAML
 
 services:
   mysql_db:
@@ -26,7 +27,6 @@ services:
       - mysql_data:/var/lib/mysql
     ports:
       - "3306:3306"
-
   phpmyadmin:
     image: phpmyadmin:latest
     container_name: phpmyadmin
@@ -38,7 +38,6 @@ services:
       - "8081:80"
     depends_on:
       - mysql_db
-
   nginx_server:
     image: nginx:latest
     container_name: nginx_server
@@ -57,34 +56,35 @@ services:
     restart: always
     volumes:
       - ./app:/var/www/html
-
 volumes:
   mysql_data:
-3. Configuración de Nginx:
+  
+# 3. Configuración de Nginx:
+# En la carpeta nginx, creaste un archivo default.conf con la configuración de Nginx.
 
-En la carpeta nginx, creaste un archivo default.conf con la configuración de Nginx.
-4. Creación de un Archivo PHP de Prueba:
+# 4. Creación de un Archivo PHP de Prueba:
+# En la carpeta app, creaste un archivo index.php para probar la configuración.
 
-En la carpeta app, creaste un archivo index.php para probar la configuración.
-5. Inicio de los Contenedores:
+# 5. Inicio de los Contenedores:
+# Abriste PowerShell y navegaste a la carpeta docker-nginx-phpmyadmin.
+# Ejecutaste el comando: docker-compose up -d
 
-Abriste PowerShell y navegaste a la carpeta docker-nginx-phpmyadmin.
-Ejecutaste el comando: docker-compose up -d
-6. Verificación de los Servicios:
+# 6. Verificación de los Servicios:
+# Verificaste que los servicios estuvieran funcionando correctamente accediendo a:
+# http://localhost:8080 (para Nginx).
+# http://localhost:8081 (para phpMyAdmin).
 
-Verificaste que los servicios estuvieran funcionando correctamente accediendo a:
-http://localhost:8080 (para Nginx).
-http://localhost:8081 (para phpMyAdmin).
-7. Resolución de Problemas (La "Carpeta Fantasma"):
+# 7. Resolución de Problema (La "Carpeta Fantasma"):
 
-Problema: Se creó automáticamente una carpeta default.conf en la carpeta nginx, impidiendo el montaje correcto del archivo default.conf.
-Pasos de Solución:
-Detención y eliminación de contenedores, redes, imágenes y volúmenes.
-Reinicio de Docker Desktop y la computadora.
-Ejecución con --remove-orphans.
-Aislamiento del problema en un nuevo proyecto.
-Verificación del sistema de archivos y permisos.
-Modificación del montaje de volúmenes (usando rutas absolutas y scripts de inicio).
-Creación de un archivo .dockerignore.
-Verificación de logs y uso de herramientas de diagnóstico.
-Reinstalación de Docker Desktop (si fuera necesario).
+# Problema: Se crea automáticamente una carpeta default.conf en la carpeta nginx, impidiendo el montaje correcto del archivo default.conf.
+
+# Pasos de Solución:
+# Detención y eliminación de contenedores, redes, imágenes y volúmenes.
+# Reinicio de Docker Desktop y la computadora.
+# Ejecución con --remove-orphans.
+# Aislamiento del problema en un nuevo proyecto.
+# Verificación del sistema de archivos y permisos.
+# Modificación del montaje de volúmenes (usando rutas absolutas y scripts de inicio).
+# Creación de un archivo .dockerignore.
+# Verificación de logs y uso de herramientas de diagnóstico.
+# Reinstalación de Docker Desktop (en caso fuera necesario).
