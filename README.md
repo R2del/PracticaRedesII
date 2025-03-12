@@ -2,14 +2,13 @@
 
 # 1. Creación de la Estructura del Proyecto:
 
-# Carpeta Principal: Creaste una carpeta llamada "docker-nginx-phpmyadmin."
-# Subcarpetas: Dentro de docker-nginx-phpmyadmin, creaste:
-# nginx: Para la configuración de Nginx.
-# app: Para los archivos PHP.
+Carpeta Principal: Crear una carpeta llamada "docker-nginx-phpmyadmin."
+Subcarpetas: Dentro de docker-nginx-phpmyadmin, crear:
+nginx: Para la configuración de Nginx.
+app: Para los archivos PHP.
 
 # 2. Creación del Archivo docker-compose.yml:
-
-# En la carpeta docker-nginx-phpmyadmin, creaste un archivo docker-compose.yml con la siguiente configuración:
+En la carpeta docker-nginx-phpmyadmin, creaste un archivo docker-compose.yml con la siguiente configuración:
 
 # YAML
 
@@ -60,19 +59,42 @@ volumes:
   mysql_data:
   
 # 3. Configuración de Nginx:
-# En la carpeta nginx, creaste un archivo default.conf con la configuración de Nginx.
+En la carpeta nginx, crear un archivo default.conf con la configuración de Nginx.
+
+server {
+    listen 80;
+    server_name localhost;
+    root /var/www/html;
+    index index.php index.html;
+
+    location / {
+        try_files $uri $uri/ /index.php?$query_string;
+    }
+
+    location ~ \.php$ {
+        fastcgi_pass php:9000;
+        fastcgi_index index.php;
+        include fastcgi_params;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+    }
+}
 
 # 4. Creación de un Archivo PHP de Prueba:
-# En la carpeta app, creaste un archivo index.php para probar la configuración.
+En la carpeta app, crear un archivo index.php para probar la configuración.
+
+<?php
+echo "<h1>¡PHP está funcionando correctamente!</h1>";
+phpinfo(); // Opcional: muestra información detallada de PHP
+?>
 
 # 5. Inicio de los Contenedores:
-# Abriste PowerShell y navegaste a la carpeta docker-nginx-phpmyadmin.
-# Ejecutaste el comando: docker-compose up -d
+Abrir Docker - Terminal y navegar a la carpeta del proyecto "docker-nginx-phpmyadmin."
+Ejecutar el comando: docker-compose up -d
 
 # 6. Verificación de los Servicios:
-# Verificaste que los servicios estuvieran funcionando correctamente accediendo a:
-# http://localhost:8080 (para Nginx).
-# http://localhost:8081 (para phpMyAdmin).
+Verificar que los servicios esten funcionando correctamente accediendo a:
+http://localhost:8080 (para Nginx).
+http://localhost:8081 (para phpMyAdmin).
 
 # 7. Resolución de Problema (La "Carpeta Fantasma"):
 
